@@ -17,9 +17,4 @@ public class EnvoyPackage {
 	public String version;
 	@XmlElement
 	public String build;
-
-	public EnvoyPackage(String pn) {
-		this.pn = pn;
-	}
-
 }

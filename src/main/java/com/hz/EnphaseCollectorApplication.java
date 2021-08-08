@@ -18,7 +18,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @TypeHint(types = {com.hz.models.envoy.xml.EnvoyDevice.class, com.hz.models.envoy.xml.EnvoyPackage.class, com.hz.models.envoy.xml.EnvoyPackage.class, com.hz.models.envoy.xml.BuildInfo.class})
 @TypeHint(types = {com.hz.models.envoy.json.AcbType.class, com.hz.models.envoy.json.ACB.class, com.hz.models.envoy.json.TypeBase.class})
 @TypeHint(
-		types = {com.hz.controllers.models.Answer.class, com.hz.controllers.models.Status.class, com.hz.controllers.models.Usage.class, com.hz.controllers.models.Question.class, com.hz.controllers.models.PvC.class, com.hz.controllers.models.IntValue.class, com.hz.controllers.models.History.class, com.hz.controllers.models.FloatValue.class},
+		types = {com.hz.controllers.models.BillAnswer.class, com.hz.controllers.models.BillQuestion.class, com.hz.controllers.models.BillResult.class,
+				com.hz.controllers.models.DateRange.class, com.hz.controllers.models.FloatValue.class, com.hz.controllers.models.History.class, com.hz.controllers.models.IntValue.class,
+				com.hz.controllers.models.PvC.class, com.hz.controllers.models.Status.class, com.hz.controllers.models.Usage.class},
 		access = AccessBits.ALL)
 @TypeHint(
 		types = {com.hz.models.database.DailySummary.class, com.hz.models.database.Total.class},
