@@ -1,8 +1,13 @@
 package com.hz.models.envoy.xml;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class EnvoyDevice {
 	@XmlAttribute(name="name")
 	public String name;

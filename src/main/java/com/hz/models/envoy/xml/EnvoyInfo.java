@@ -15,6 +15,8 @@ public class EnvoyInfo {
 	public EnvoyDevice envoyDevice;
 	@XmlElement(name = "package")
 	public List<EnvoyPackage> packages;
+	@XmlElement(name = "build_info")
+	public BuildInfo buildInfo;
 
 	// Only needed for test bean
 	public EnvoyInfo(String softwareVersion, String serialNumber) {
