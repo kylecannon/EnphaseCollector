@@ -7,6 +7,7 @@ import com.hz.interfaces.EventRepository;
 import com.hz.interfaces.SummaryRepository;
 import com.hz.metrics.Metric;
 import com.hz.models.database.*;
+import com.hz.models.dto.PanelProduction;
 import com.hz.models.events.MetricCollectionEvent;
 import com.hz.models.events.SystemInfoEvent;
 import com.hz.utils.Calculators;
@@ -104,7 +105,7 @@ public class LocalDBService {
 		event.setConsumption(getMetric(metricCollectionEvent.getMetrics(), "solar.consumption.current").map(metric -> BigDecimal.valueOf(metric.getValue())).orElse(BigDecimal.ZERO));
 		event.setVoltage(getMetric(metricCollectionEvent.getMetrics(), "solar.production.voltage").map(metric -> BigDecimal.valueOf(metric.getValue())).orElse(BigDecimal.ZERO));
 
-		metricCollectionEvent.getMetrics().forEach(m -> event.addSolarPanel(new Panel(m.getName(), m.getValue())));
+		metricCollectionEvent.getMetrics().stream().filter(Metric::isSolarPanel).forEach(event::addSolarPanel);
 
 		eventRepository.save(event);
 	}
@@ -157,6 +158,13 @@ public class LocalDBService {
 
 	public List<Event> getTodaysEvents() {
 		return eventRepository.findEventsByTimeAfter(getMidnight());
+	}
+
+	@Transactional
+	public PanelProduction getMaxPanelProduction() {
+		Event event = this.getLastEvent();
+		BigDecimal max = event.getMaxPanelProduction();
+		return new PanelProduction(event.getMaxPanelProduction(), BigDecimal.ZERO, event.countMaxPanelsProducing(max));
 	}
 
 	// When a summary record is null the list is not continuous so fill missing values

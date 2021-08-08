@@ -21,7 +21,7 @@ import java.util.Collections;
 /**
  * Created by David on 22-Oct-17.
  */
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @RequiredArgsConstructor
 @Log4j2
 public class EnphaseRestClientConfig {
@@ -59,8 +59,8 @@ public class EnphaseRestClientConfig {
 
 	/**
 	 * Needed for /ivp/meters and /ivp/meters/readings
-	 * @return customer converter to handle json as application octect stream
-	 */
+	 * @return customer converter to handle json as application octet stream
+	*/
 	@Bean
 	public HttpMessageConverters customConverters() {
 		MappingJackson2HttpMessageConverter octetStreamConverter = new MappingJackson2HttpMessageConverter();

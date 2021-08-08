@@ -24,8 +24,4 @@ public class Panel {
 		this.value = value;
 	}
 
-	public boolean isSolarPanel() {
-		return identifier.startsWith("solar-panel-");
-	}
-
 }

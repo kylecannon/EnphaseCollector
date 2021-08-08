@@ -6,6 +6,11 @@ import javax.xml.bind.annotation.XmlElement;
 
 @NoArgsConstructor
 public class EnvoyPackage {
+
+	public EnvoyPackage(String pn) {
+		this.pn = pn;
+	}
+
 	@XmlElement
 	public String pn;
 	@XmlElement

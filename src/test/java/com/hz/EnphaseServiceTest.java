@@ -46,7 +46,7 @@ class EnphaseServiceTest {
 	}
 
 	@Test
-	public void CollectionDateTest() {
+	void CollectionDateTest() {
 		LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
 		// Given
@@ -59,7 +59,7 @@ class EnphaseServiceTest {
 	}
 
 	@Test
-	public void ConvertorsTest() {
+	void ConvertorsTest() {
 		assertThat(BigDecimal.ZERO, comparesEqualTo(Convertors.convertToWattHours(BigDecimal.ZERO, BigDecimal.ZERO)));
 		assertThat(BigDecimal.valueOf(16.6667), comparesEqualTo(Convertors.convertToWattHours(BigDecimal.valueOf(1000), BigDecimal.ONE)));
 
@@ -68,7 +68,7 @@ class EnphaseServiceTest {
 	}
 
 	@Test
-	public void ValidatorsTest() {
+	void ValidatorsTest() {
 		Assertions.assertTrue(Validators.isValidDuration("7days"));
 		Assertions.assertTrue(Validators.isValidDuration("2WEeks"));
 		Assertions.assertTrue(Validators.isValidDuration("3Months"));
@@ -79,9 +79,12 @@ class EnphaseServiceTest {
 	}
 
 	@Test
-	public void CalculatorsTest() {
+	void CalculatorsTest() {
 		assertThat(BigDecimal.valueOf(0.007), comparesEqualTo(Calculators.calculateFinancial(6000L, 0.07, "test", BigDecimal.ONE)));
 		assertThat(BigDecimal.valueOf(0), comparesEqualTo(Calculators.calculateFinancial(0L, 0.07, "test", BigDecimal.ONE)));
 		assertThat(BigDecimal.valueOf(0.007), comparesEqualTo(Calculators.calculateFinancial(12000L, 0.07, "test", BigDecimal.valueOf(0.5))));
+		assertThat(BigDecimal.valueOf(0.007), comparesEqualTo(Calculators.calculateFinancial(24000L, 0.07, "test", BigDecimal.valueOf(0.25))));
+		assertThat(BigDecimal.valueOf(0.25), comparesEqualTo(Calculators.calculateMinutesOfOperation(15000)));
+		assertThat(BigDecimal.valueOf(0.083), comparesEqualTo(Calculators.calculateMinutesOfOperation(5000)));
 	}
 }
