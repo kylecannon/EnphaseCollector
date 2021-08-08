@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by David on 22-Oct-17.
@@ -25,13 +26,20 @@ public class EnphaseCollectorProperties {
     private double dailySupplyCharge;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate effectiveRateDate;
+    private String effectiveRateDate;
     private HTTPResource influxdbResource;
     private PvOutputResource pvOutputResource;
 
     // Assumes refreshSeconds is in milliseconds
     public BigDecimal getRefreshAsMinutes() {
         return Calculators.calculateMinutesOfOperation(refreshSeconds);
+    }
+
+    public LocalDate getEffectiveRateDateAsLocaDate() {
+        if (effectiveRateDate == null || effectiveRateDate.isEmpty()) {
+            return null;
+        }
+        return LocalDate.parse(effectiveRateDate, DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
     @Data

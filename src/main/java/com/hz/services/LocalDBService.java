@@ -42,7 +42,8 @@ public class LocalDBService {
 
 	@EventListener(ApplicationReadyEvent.class)
 	@Transactional
-	public void applicationReady() {
+	public void applicationReady(ApplicationReadyEvent readyEvent) {
+		log.info("Application started in environment {}", readyEvent.getSpringApplication().getWebApplicationType().name());
 		this.upgradeRates();
 		this.createSummaries();
 	}
@@ -53,14 +54,14 @@ public class LocalDBService {
 			// First creation set effective to first summary event
 			log.info("Upgrading Rate Table (First Run)");
 			this.saveElectricityRate(new ElectricityRate(properties.getPaymentPerKiloWatt(), properties.getChargePerKiloWatt(), properties.getDailySupplyCharge()));
-		} else if (properties.getEffectiveRateDate() == null && rate.getChargePerKiloWatt().compareTo(properties.getChargePerKiloWatt()) != 0) {
+		} else if (properties.getEffectiveRateDateAsLocaDate() == null && rate.getChargePerKiloWatt().compareTo(properties.getChargePerKiloWatt()) != 0) {
 			// Rate has changes set new rate from today
 			log.info("Upgrading Rate Table (New Rate Set as at Today)");
 			this.saveElectricityRate(LocalDate.now(), new ElectricityRate(properties.getPaymentPerKiloWatt(), properties.getChargePerKiloWatt(), properties.getDailySupplyCharge()));
-		} else if (properties.getEffectiveRateDate() != null && properties.getEffectiveRateDate().isAfter(rate.getEffectiveDate())) {
+		} else if (properties.getEffectiveRateDateAsLocaDate() != null && properties.getEffectiveRateDateAsLocaDate().isAfter(rate.getEffectiveDate())) {
 			// Rate is changing from new date
-			log.info("Upgrading Rate Table (New Rate set effective {})", properties.getEffectiveRateDate());
-			this.saveElectricityRate(properties.getEffectiveRateDate(), new ElectricityRate(properties.getPaymentPerKiloWatt(), properties.getChargePerKiloWatt(), properties.getDailySupplyCharge()));
+			log.info("Upgrading Rate Table (New Rate set effective {})", properties.getEffectiveRateDateAsLocaDate());
+			this.saveElectricityRate(properties.getEffectiveRateDateAsLocaDate(), new ElectricityRate(properties.getPaymentPerKiloWatt(), properties.getChargePerKiloWatt(), properties.getDailySupplyCharge()));
 		}
 	}
 
